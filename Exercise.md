@@ -145,13 +145,13 @@ SQL-Interview-Practice/
 
 **Tasks**
 
-- [ ] Query `customers`; return one column named `city`.
-- [ ] Sort the distinct cities alphabetically.
+- [X] Query `customers`; return one column named `city`.
+- [X] Sort the distinct cities alphabetically.
 
 **Pass checks**
 
-- [ ] Exactly 5 city names are returned.
-- [ ] `Pune` and `Mumbai` appear once each, despite multiple customers.
+- [X] Exactly 5 city names are returned.
+- [X] `Pune` and `Mumbai` appear once each, despite multiple customers.
 
 **Interview reflection:** How does DISTINCT differ from GROUP BY?
 
