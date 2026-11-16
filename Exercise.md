@@ -68,7 +68,7 @@ SQL-Interview-Practice/
 |  01 | AI Department Salary Filter                | Easy         |  ☐  |
 |  02 | Unique Customer Cities                     | Easy         |  ☐  |
 |  03 | Top 3 Most Expensive Products              | Easy         |  ✅  |
-|  04 | Active Employees Hired in 2025             | Easy         |  ☐  |
+|  04 | Active Employees Hired in 2025             | Easy         |  ✅  |
 |  05 | Search Products by Name Prefix             | Easy         |  ☐  |
 |  06 | Orders That Need Attention                 | Easy         |  ☐  |
 |  07 | Product Stock Labels                       | Easy         |  ☐  |
@@ -189,18 +189,18 @@ SQL-Interview-Practice/
 
 **Tasks**
 
-- [ ] Return `employee_name`, `hire_date`.
-- [ ] Use an inclusive range covering January 1 through December 31, 2025.
-- [ ] Sort chronologically by hire date.
+- [X] Return `employee_name`, `hire_date`.
+- [X] Use an inclusive range covering January 1 through December 31, 2025.
+- [X] Sort chronologically by hire date.
 
 **Pass checks**
 
-- [ ] Expected names: Amol, Sneha, Meera.
-- [ ] Arjun is excluded because employment_status is inactive.
+- [X] Expected names: Amol, Sneha, Meera.
+- [X] Arjun is excluded because employment_status is inactive.
 
 **Interview reflection:** When is `hire_date >= ... AND hire_date < ...` better than BETWEEN?
 
-**Save as:** `Week-01/Day-04.sql`  |  **Progress:** ☐ Not started
+**Save as:** `Week-01/Day-04.sql`  |  **Progress:** ✅ Completed
 
 ---
 
