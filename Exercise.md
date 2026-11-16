@@ -67,7 +67,7 @@ SQL-Interview-Practice/
 | --: | ------------------------------------------ | ------------ | :--: |
 |  01 | AI Department Salary Filter                | Easy         |  ☐  |
 |  02 | Unique Customer Cities                     | Easy         |  ☐  |
-|  03 | Top 3 Most Expensive Products              | Easy         |  ☐  |
+|  03 | Top 3 Most Expensive Products              | Easy         |  ✅  |
 |  04 | Active Employees Hired in 2025             | Easy         |  ☐  |
 |  05 | Search Products by Name Prefix             | Easy         |  ☐  |
 |  06 | Orders That Need Attention                 | Easy         |  ☐  |
@@ -167,17 +167,17 @@ SQL-Interview-Practice/
 
 **Tasks**
 
-- [ ] Return `product_name`, `price`.
-- [ ] Order by price descending and use a row limit.
+- [X] Return `product_name`, `price`.
+- [X] Order by price descending and use a row limit.
 
 **Pass checks**
 
-- [ ] Order is Laptop (65000), Monitor (15000), Desk (8500).
-- [ ] Exactly 3 rows appear.
+- [X] Order is Laptop (65000), Monitor (15000), Desk (8500).
+- [X] Exactly 3 rows appear.
 
 **Interview reflection:** What happens if two products have the same price?
 
-**Save as:** `Week-01/Day-03.sql`  |  **Progress:** ☐ Not started
+**Save as:** `Week-01/Day-03.sql`  |  **Progress:** ✅ Completed
 
 ---
 
