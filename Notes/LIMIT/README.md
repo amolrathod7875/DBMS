@@ -1,248 +1,223 @@
-# Phase 3: SQL for Data Science — Topic 4: LIMIT
+# Phase 3: SQL — Topic 40: LIMIT and TOP — Restricting Rows in SQL 🔢
 
-LIMIT is used to control how many rows a SQL query returns. It is especially useful when you want to see only the first few records, such as:
-- Top 5 highest salaries
-- Top 10 products by sales
-- First 20 customers
-- Latest 10 transactions
+When working with large databases, you don't always need to retrieve every record. SQL provides `LIMIT` and `TOP` to restrict the number of rows returned by a query. These clauses are especially useful when finding top-performing employees, highest transactions, latest orders, or popular products.
 
-## Basic Syntax
+## 1. What is LIMIT?
+
+`LIMIT` restricts the number of rows returned by a query.
+
+**Syntax:**
+
+```sql
+SELECT column1, column2
+FROM table_name
+LIMIT number;
+```
+
+**Example:**
 
 ```sql
 SELECT *
-FROM employees
-LIMIT 5;
-```
-
-This returns only 5 rows from the result.
-
-## LIMIT with ORDER BY
-
-This is where LIMIT becomes especially powerful.
-
-Suppose you want the 5 highest-paid employees:
-
-```sql
-SELECT employee_name, salary
-FROM employees
-ORDER BY salary DESC
-LIMIT 5;
-```
-
-The logical idea is: Filter → Sort → Take required number of rows
-
-For example:
-```
-Salary
-120000
-110000
-95000
-90000
-85000
-```
-
-Only the top 5 rows are returned.
-
-## LIMIT Without ORDER BY
-
-You can write:
-
-```sql
-SELECT *
-FROM employees
-LIMIT 5;
-```
-
-But without ORDER BY, you should not assume these are the "first" or "top" 5 meaningful records. The database does not guarantee a particular order unless you explicitly specify one.
-
-So for analysis, this is usually better:
-
-```sql
-SELECT *
-FROM employees
-ORDER BY salary DESC
-LIMIT 5;
-```
-
-## LIMIT with WHERE
-
-You can combine WHERE, ORDER BY, and LIMIT.
-
-```sql
-SELECT employee_name, salary
-FROM employees
-WHERE department = 'IT'
-ORDER BY salary DESC
+FROM Employees
 LIMIT 3;
 ```
 
-This finds the 3 highest-paid employees in the IT department.
+This returns only the first three rows from the query result.
 
-## LIMIT for Top-N Analysis
+## 2. LIMIT with ORDER BY
 
-Top-N queries are extremely common in data analysis.
+One of the most common use cases is finding the top records based on a particular column.
 
-### Top 10 products by sales
-
-```sql
-SELECT product_name, sales
-FROM products
-ORDER BY sales DESC
-LIMIT 10;
-```
-
-### 5 most recent transactions
+**Example:** Find the three highest-paid employees.
 
 ```sql
-SELECT transaction_id, transaction_date, amount
-FROM transactions
-ORDER BY transaction_date DESC
-LIMIT 5;
-```
-
-### 3 cheapest products
-
-```sql
-SELECT product_name, price
-FROM products
-ORDER BY price ASC
+SELECT *
+FROM Employees
+ORDER BY Salary DESC
 LIMIT 3;
 ```
 
-## LIMIT with OFFSET
+This query:
+- Sorts employees by salary in descending order.
+- Returns only the first three records.
 
-OFFSET allows you to skip a certain number of rows before returning results.
+> **Important:** Always use `ORDER BY` when you need a meaningful top-N result.
+
+## 3. What is TOP?
+
+`TOP` is commonly used in Microsoft SQL Server to restrict the number of rows returned.
+
+```sql
+SELECT TOP 3 *
+FROM Employees;
+```
+
+**Example:** Find the five highest-paid employees.
+
+```sql
+SELECT TOP 5
+    Name,
+    Salary
+FROM Employees
+ORDER BY Salary DESC;
+```
+
+## 4. LIMIT vs TOP
+
+Both `LIMIT` and `TOP` are used to restrict the number of rows returned by a SQL query.
+
+| Feature | LIMIT | TOP |
+|---|---|---|
+| Databases | MySQL, PostgreSQL, SQLite | Microsoft SQL Server |
+| Position | Written at the end of the query | Written immediately after SELECT |
+| Purpose | Specifies maximum number of rows to return | Specifies maximum number of rows to return |
+
+> **Note:** PostgreSQL and SQLite support `LIMIT`, while SQL Server supports `TOP`. Other databases may use different syntax.
+
+## 5. LIMIT with OFFSET
+
+`OFFSET` allows you to skip a specific number of rows before returning results.
 
 ```sql
 SELECT *
-FROM employees
-LIMIT 5 OFFSET 10;
+FROM Employees
+LIMIT 3 OFFSET 2;
 ```
 
-This means:
-- Skip 10 rows
-- Return the next 5 rows
+This skips the first two rows and returns the next three rows.
 
-This is commonly used for pagination.
+**Example data:**
 
-For example:
-- Page 1 → LIMIT 10 OFFSET 0
-- Page 2 → LIMIT 10 OFFSET 10
-- Page 3 → LIMIT 10 OFFSET 20
+| Employee_ID | Name  | Salary |
+|---|---|---|
+| 101 | Rahul | 50000 |
+| 102 | Priya | 45000 |
+| 103 | Amit  | 60000 |
+| 104 | Sneha | 55000 |
+| 105 | Karan | 40000 |
 
-Syntax can vary between SQL databases, so always check the specific database you are using.
-
-## LIMIT vs TOP vs FETCH
-
-Different SQL databases may use different syntax.
-
-**MySQL / PostgreSQL / SQLite** commonly use:
-```sql
-LIMIT 5;
-```
-
-**SQL Server** commonly uses:
-```sql
-SELECT TOP 5 *
-FROM employees;
-```
-
-**Standard SQL** also supports:
-```sql
-FETCH FIRST 5 ROWS ONLY;
-```
-
-The concept is the same: restrict the number of returned rows.
-
-## Real-World Data Science Example
-
-Suppose an analyst wants to investigate the 10 largest customer transactions.
-
-```sql
-SELECT customer_id,
-       transaction_id,
-       amount
-FROM transactions
-ORDER BY amount DESC
-LIMIT 10;
-```
-
-This can help identify:
-- High-value transactions
-- Potential anomalies
-- Important customers
-- Transactions requiring further investigation
-
-## Common Mistakes
-
-### Mistake 1 — Using LIMIT without sorting
+After sorting by Employee_ID:
 
 ```sql
 SELECT *
-FROM products
-LIMIT 10;
+FROM Employees
+ORDER BY Employee_ID
+LIMIT 2 OFFSET 2;
 ```
 
-This does not necessarily mean "10 best products."
+**Output:**
 
-For that:
-```sql
-ORDER BY sales DESC
-LIMIT 10;
-```
+| Employee_ID | Name |
+|---|---|
+| 103 | Amit |
+| 104 | Sneha |
 
-### Mistake 2 — Using ASC when you need the highest values
+## 6. Pagination Using LIMIT and OFFSET
 
-Wrong:
-```sql
-ORDER BY salary ASC
-LIMIT 5;
-```
-This returns the lowest salaries.
+Pagination means displaying records in smaller groups instead of loading everything at once. For example, displaying 10 employees per page.
 
-For the highest salaries:
-```sql
-ORDER BY salary DESC
-LIMIT 5;
-```
-
-### Mistake 3 — Forgetting that LIMIT applies after sorting
-
-For a top-N analysis, think: ORDER BY → LIMIT, not simply LIMIT → assume top records.
-
-## Interview Questions
-
-**1. What is LIMIT?**
-
-LIMIT restricts the number of rows returned by a query.
-
-**2. How do you find the top 10 salaries?**
+**Page 1:**
 
 ```sql
 SELECT *
-FROM employees
-ORDER BY salary DESC
+FROM Employees
+ORDER BY Employee_ID
+LIMIT 10 OFFSET 0;
+```
+
+**Page 2:**
+
+```sql
+SELECT *
+FROM Employees
+ORDER BY Employee_ID
+LIMIT 10 OFFSET 10;
+```
+
+**Page 3:**
+
+```sql
+SELECT *
+FROM Employees
+ORDER BY Employee_ID
+LIMIT 10 OFFSET 20;
+```
+
+This technique is commonly used in websites, dashboards, and applications.
+
+## 7. TOP with PERCENT
+
+SQL Server also supports `TOP PERCENT`.
+
+```sql
+SELECT TOP 20 PERCENT *
+FROM Employees
+ORDER BY Salary DESC;
+```
+
+This retrieves approximately the top 20% of rows based on salary.
+
+## 8. TOP WITH TIES
+
+SQL Server supports `WITH TIES`, which includes additional rows tied with the last selected row based on the ORDER BY values.
+
+```sql
+SELECT TOP 3 WITH TIES
+    Name,
+    Salary
+FROM Employees
+ORDER BY Salary DESC;
+```
+
+If multiple employees have the same salary as the third employee, all tied employees are included.
+
+## 9. Real-World Banking Example
+
+Suppose your manager asks: "Find the top 10 customers with the highest account balances."
+
+**MySQL / PostgreSQL:**
+
+```sql
+SELECT
+    Customer_ID,
+    Customer_Name,
+    Account_Balance
+FROM Customers
+ORDER BY Account_Balance DESC
 LIMIT 10;
 ```
 
-**3. Can LIMIT be used with WHERE?**
+**SQL Server:**
 
-Yes.
 ```sql
-SELECT *
-FROM employees
-WHERE department = 'Finance'
-LIMIT 5;
+SELECT TOP 10
+    Customer_ID,
+    Customer_Name,
+    Account_Balance
+FROM Customers
+ORDER BY Account_Balance DESC;
 ```
 
-**4. Why is ORDER BY important when using LIMIT?**
+Both queries retrieve the 10 customers with the highest account balances.
 
-Because without sorting, the returned rows are not necessarily the highest, lowest, newest, or oldest records you want.
+## 10. Common Mistakes to Avoid
 
-**5. What is OFFSET used for?**
+- Using `LIMIT` in SQL Server (use `TOP` instead).
+- Using `TOP` in MySQL (use `LIMIT` instead).
+- Forgetting `ORDER BY` when selecting top-N records.
+- Confusing `LIMIT` with `OFFSET`.
+- Using a large `OFFSET` on huge tables without considering performance.
+- Assuming the database returns rows in a guaranteed order without `ORDER BY`.
 
-OFFSET skips a specified number of rows before returning the requested rows, commonly for pagination.
+## 🔑 Key Takeaways
+
+- `LIMIT` restricts the number of returned rows.
+- `TOP` is commonly used in SQL Server.
+- `ORDER BY` + `LIMIT` is useful for top-N analysis.
+- `OFFSET` skips a specified number of rows.
+- Pagination helps retrieve data in smaller batches.
+- `WITH TIES` includes additional tied rows in SQL Server.
 
 ---
 
-📍 *Double Tap ❤️ For More*
+📌 *Double Tap ❤️ For More*
