@@ -69,7 +69,7 @@ SQL-Interview-Practice/
 |  02 | Unique Customer Cities                     | Easy         |  ☐  |
 |  03 | Top 3 Most Expensive Products              | Easy         |  ✅  |
 |  04 | Active Employees Hired in 2025             | Easy         |  ✅  |
-|  05 | Search Products by Name Prefix             | Easy         |  ☐  |
+|  05 | Search Products by Name Prefix             | Easy         |  ✅  |
 |  06 | Orders That Need Attention                 | Easy         |  ☐  |
 |  07 | Product Stock Labels                       | Easy         |  ☐  |
 |  08 | Employee Count per Department              | Easy         |  ☐  |
@@ -212,18 +212,18 @@ SQL-Interview-Practice/
 
 **Tasks**
 
-- [ ] Return `product_name`, `category`, and `price`.
-- [ ] Use a SQL pattern, not a manual list of names.
-- [ ] Sort by product name.
+- [X] Return `product_name`, `category`, and `price`.
+- [X] Use a SQL pattern, not a manual list of names.
+- [X] Sort by product name.
 
 **Pass checks**
 
-- [ ] Exactly Mouse and Monitor match.
-- [ ] Products such as Webcam and Laptop do not match.
+- [X] Exactly Mouse and Monitor match.
+- [X] Products such as Webcam and Laptop do not match.
 
 **Interview reflection:** What do `%` and `_` mean in SQL LIKE?
 
-**Save as:** `Week-01/Day-05.sql`  |  **Progress:** ☐ Not started
+**Save as:** `Week-01/Day-05.sql`  |  **Progress:** ✅ Completed
 
 ---
 
